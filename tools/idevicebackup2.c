@@ -1674,6 +1674,7 @@ checkpoint:
 			opts = plist_new_dict();
 			plist_dict_set_item(opts, "RestoreSystemFiles", plist_new_bool(cmd_flags & CMD_FLAG_RESTORE_SYSTEM_FILES));
 			PRINT_VERBOSE(1, "Restoring system files: %s\n", (cmd_flags & CMD_FLAG_RESTORE_SYSTEM_FILES ? "Yes":"No"));
+			plist_dict_set_item(opts, "RestorePreserveCameraRoll", plist_new_bool(1));
 			if ((cmd_flags & CMD_FLAG_RESTORE_REBOOT) == 0)
 				plist_dict_set_item(opts, "RestoreShouldReboot", plist_new_bool(0));
 			PRINT_VERBOSE(1, "Rebooting after restore: %s\n", (cmd_flags & CMD_FLAG_RESTORE_REBOOT ? "Yes":"No"));
@@ -1682,9 +1683,9 @@ checkpoint:
 			PRINT_VERBOSE(1, "Don't copy backup: %s\n", ((cmd_flags & CMD_FLAG_RESTORE_COPY_BACKUP) == 0 ? "Yes":"No"));
 			plist_dict_set_item(opts, "RestorePreserveSettings", plist_new_bool((cmd_flags & CMD_FLAG_RESTORE_SETTINGS) == 0));
 			PRINT_VERBOSE(1, "Preserve settings of device: %s\n", ((cmd_flags & CMD_FLAG_RESTORE_SETTINGS) == 0 ? "Yes":"No"));
-			if (cmd_flags & CMD_FLAG_RESTORE_REMOVE_ITEMS)
-				plist_dict_set_item(opts, "RemoveItemsNotRestored", plist_new_bool(1));
-				PRINT_VERBOSE(1, "Remove items that are not restored: %s\n", ((cmd_flags & CMD_FLAG_RESTORE_REMOVE_ITEMS) ? "Yes":"No"));
+//			if (cmd_flags & CMD_FLAG_RESTORE_REMOVE_ITEMS)
+			plist_dict_set_item(opts, "RemoveItemsNotRestored", plist_new_bool((cmd_flags & CMD_FLAG_RESTORE_REMOVE_ITEMS)));
+			PRINT_VERBOSE(1, "Remove items that are not restored: %s\n", ((cmd_flags & CMD_FLAG_RESTORE_REMOVE_ITEMS) ? "Yes":"No"));
 			if (backup_password != NULL) {
 				plist_dict_set_item(opts, "Password", plist_new_string(backup_password));
 			}
